@@ -1,0 +1,38 @@
+{% extends 'base/base.html'%}
+
+{% block title %} Login {% endblock %}
+
+{% block body %}
+
+<div class="container justify-content-center h-100">
+    <div class="row">
+        <div class="d-flex flex-column min-vh-100 justify-content-center align-items-center">
+                <h1>Login</h1>
+            <div class="dialogue-box">
+
+                <form method="POST">
+
+                    {% csrf_token %}
+                    <div style="display:block;">
+                        <label class="dialogue-box-label" for="id_username">Username: </label>
+                        {{form.username}}
+                    </div>
+
+                    <label class="dialogue-box-label" for="id_password">Password: </label>
+                    {{form.password}}
+
+                    <div style="text-align: center;">
+                        <input type="submit" value="Login">
+                    </div>
+                </form>
+
+                <p>Don't have an account? </p>
+                <a href="{% url 'register' %}">Register</a>
+
+            </div>
+        </div>
+
+    </div>
+</div>
+
+{% endblock %}

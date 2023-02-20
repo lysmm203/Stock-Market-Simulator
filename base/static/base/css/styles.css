@@ -1,0 +1,37 @@
+body{
+    background-color: #FFFBF5;
+}
+
+p{
+    font-size: 1.5rem;
+}
+
+
+.dialogue-box{
+    border: 0.2rem solid black;
+    border-radius: 25px;
+    padding: 2rem;
+}
+
+.dialogue-box-label{
+    font-size: 2rem;
+    margin: 0.5rem;
+}
+
+.testing-class{
+    color: pink;
+}
+
+.ui-autocomplete {
+    position: absolute;
+    top: 0;
+    left: 0;
+    cursor: default;
+    max-height: 145px;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+label{
+    font-size: 2rem;
+}

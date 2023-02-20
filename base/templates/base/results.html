@@ -1,0 +1,33 @@
+{% extends 'base/base.html'%}
+
+{% block title %} Results {% endblock %}
+
+{% block body %}
+
+<!--The plots for the raw values-->
+
+    <!--<p>Portfolio vs Index Raw</p>-->
+    <!--<img src="data:image/png;base64, {{portfolio_vs_index_raw|safe}}" alt="" id="img">-->
+
+    <!--<p>Portfolio Raw</p>-->
+        <!--<img src="data:image/png;base64, {{portfolio_raw|safe}}" alt="" id="img">-->
+
+<div class="container">
+    <div class="row">
+        <div class="col">
+            <p>Portfolio vs Index Percentage</p>
+            <img alt="" id="img" src="data:image/png;base64, {{portfolio_vs_index_percentage|safe}}">
+        </div>
+
+        <div class="col">
+            <p>Portfolio Percentage</p>
+            <img alt="" id="img" src="data:image/png;base64, {{portfolio_percentage|safe}}">
+        </div>
+    </div>
+</div>
+
+<br>
+
+<a href="{% url 'index' %}">Go back to the Stock Market Parameters Page</a>
+
+{% endblock %}
