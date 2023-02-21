@@ -196,7 +196,7 @@ def plot_stock_data(portfolio_and_index_tracker, index, portfolio_only=False, pe
     the graph will include both the portfolio and the index
     :param percentage: A boolean value to determine whether the percentage should be graphed or not. If False,
     the graph is plotted with regards to the dollar
-    :return graph: A string of decoded bytes that represent the graph as a PNG image 
+    :return graph: A string of decoded bytes that represent the graph as a PNG image
     """
     index_name = index_name_hash[index]
 

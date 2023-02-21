@@ -10,8 +10,8 @@ def extract_ticker_and_name(soup):
     it also excludes all stock tickers with . or -
 
     :param soup: A BeautifulSoup object
-    :return all_tickers: A set containing all of the tickers that are extracted from the BeautifulSoup object,
-    excluding those with . or -
+    :return all_tickers: A set of strings containing all of the tickers that are extracted from the BeautifulSoup
+    object, excluding those with . or -
     """
     all_tickers = set()
 
@@ -30,7 +30,8 @@ def get_all_tickers():
     """
     Scrapes the eoddata.com website to get all the tickers from the NYSE and NASDAQ exchange
 
-    :return all_tickers: A set containing all of the tickers from the NYSE and NASDAQ exchanges, excluding those with . or -
+    :return all_tickers: A set of strings containing all of the tickers from the NYSE and NASDAQ exchanges,
+    excluding those with . or -
     """
     urls = ['https://eoddata.com/stocklist/NYSE/{alphabet}.htm', 'https://eoddata.com/stocklist/NASDAQ/{alphabet}.htm']
     all_tickers = set()
