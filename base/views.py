@@ -12,7 +12,7 @@ from django.contrib.auth import login
 
 from .models import StockParameters, StockTicker
 from .forms import StockParameterForm
-from .utils import plot_stock_data, add_tickers_to_db, filter_stock_by_start_date, ticker_extractor
+from .utils import plot_stock_data, add_tickers_to_db, filter_stock_by_start_date, ticker_extractor, create_plotting_df
 
 import requests
 import yfinance as yf
@@ -116,16 +116,18 @@ class ResultsView(LoginRequiredMixin, ListView):
         index = self.request.session['index']
         stock_portfolio = self.request.session['portfolio']
 
-        portfolio_vs_index_raw = plot_stock_data(start_date, end_date, stock_portfolio, index)
-        portfolio_vs_index_percentage = plot_stock_data(start_date, end_date, stock_portfolio, index, percentage=True)
-        portfolio_raw = plot_stock_data(start_date, end_date, stock_portfolio, index, portfolio_only=True)
-        portfolio_percentage = plot_stock_data(start_date, end_date, stock_portfolio, index, portfolio_only=True, percentage=True )
+        plotting_df = create_plotting_df(start_date, end_date, stock_portfolio, index)
+
+        portfolio_vs_index_percentage = plot_stock_data(plotting_df, index, percentage=True)
+        portfolio_percentage = plot_stock_data(plotting_df, index, portfolio_only=True, percentage=True)
+        # portfolio_vs_index_raw = plot_stock_data(start_date, end_date, stock_portfolio, index)
+        # portfolio_raw = plot_stock_data(start_date, end_date, stock_portfolio, index, portfolio_only=True)
 
 
-        context['portfolio_vs_index_raw'] = portfolio_vs_index_raw
         context['portfolio_vs_index_percentage'] = portfolio_vs_index_percentage
-        context['portfolio_raw'] = portfolio_raw
         context['portfolio_percentage'] = portfolio_percentage
+        # context['portfolio_vs_index_raw'] = portfolio_vs_index_raw
+        # context['portfolio_raw'] = portfolio_raw
 
         return context
 

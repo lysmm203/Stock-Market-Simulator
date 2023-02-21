@@ -23,6 +23,11 @@ index_name_hash = {
 
 
 def add_tickers_to_db():
+    """
+    Adds the rows of the stocks.csv file into the database. Do nothing if the data already exists in the database
+
+    :return: None
+    """
     csv_path = os.path.join(os.path.dirname(__file__), 'stocks.csv')
     tickers_df = pd.read_csv(csv_path)
 
@@ -33,10 +38,14 @@ def add_tickers_to_db():
             company_name=row['company_name']
         )
 
-# Function to read data from the database and filter out the stocks that fit in the timeframe defined by
-# start_year to the current year. end_year isn't needed for filtering as all the stocks in the database
-# are valid at the current time that the user runs the program in
 def filter_stock_by_start_date(start_date):
+    """
+    Filters out the stocks that have a first trade date that is greater than the start date set by the user
+
+    :param start_date: A string that represents the start date set by the user in the Stock Market Parameters page. The
+    format of the string is YYYY-MM-DD
+    :return filtered_stocks: A list of strings representing all the filtered stocks
+    """
     filtered_stocks = []
     stock_tickers = StockTicker.objects.all()
 
@@ -48,7 +57,20 @@ def filter_stock_by_start_date(start_date):
 
 
 def query_historical_stock_data(stock_ticker, start_date, end_date):
-    url = 'https://query1.finance.yahoo.com/v7/finance/chart/{stock_ticker}?period1={start_date}&period2={end_date}&interval=1d&events=history&includeAdjustedClose=true'
+    """
+    Makes a request to the Yahoo Finance API for the historical stock data of the given stock. The time period for the
+    historical stock data is defined by the start_date and end_date. The response to the server is then returned as
+    a dictionary.
+
+    :param stock_ticker: A string that represents the specific ticker that is used
+    :param start_date: A string that represents the start date set by the user in the Stock Market Parameters page. The
+    format of the string is YYYY-MM-DD
+    :param end_date: A string that represents the end date set by the user in the Stock Market Parameters page. The
+    format of the string is YYYY-MM-DD
+    :return data: A dictionary containing the server's response
+    """
+    url = 'https://query1.finance.yahoo.com/v7/finance/chart/{stock_ticker}?period1={start_date}&period2={end_date}\
+    &interval=1d&events=history&includeAdjustedClose=true'
     user_agent_headers = {
         'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.95 Safari/537.36'}
 
@@ -58,9 +80,13 @@ def query_historical_stock_data(stock_ticker, start_date, end_date):
     data = response.json()
     return data
 
-# chosen_stock will be a string of the format Ticker:Company name. The purpose of the ticker_extractor function
-# is to extract just the ticker out of the chosen_stock string
 def ticker_extractor(chosen_stock):
+    """
+    Extracts the ticker from the chosen_stock string.
+
+    :param chosen_stock: A string with the formet of Ticker:Company Name
+    :return res: The substring that represents the ticker
+    """
     res = ""
     for char in chosen_stock:
         if char == ":":
@@ -69,8 +95,16 @@ def ticker_extractor(chosen_stock):
 
     return res
 
-
 def calculate_stock_growth(stock_data, amount_invested):
+    """
+    Calculates the growth of a stock, both in terms of raw dollars and percentages
+
+    :param stock_data: The historical stock data returned from the query_historical_stock_data function
+    :param amount_invested: An integer representing the amount invested in the given stock. This is defined by the
+    user input in the Stock Selection page
+    :return stock_growth: A tuple of two integer lists containing the growth of the stock in terms of percentages in the
+    first index, and raw dollars in the second index
+    """
 
     stock_price_history = stock_data['chart']['result'][0]['indicators']['quote'][0]['close']
 
@@ -79,14 +113,28 @@ def calculate_stock_growth(stock_data, amount_invested):
     # The growth of the investment in dollars (based on amount invested)
     stock_investment_growth = [(percentage * amount_invested) for percentage in stock_growth_percentage]
 
-    return (stock_growth_percentage, stock_investment_growth)
+    stock_growth = (stock_growth_percentage, stock_investment_growth)
 
+    return stock_growth
 
-# The start and end represent the start year and end year set by the user. The stock portfolio refers
-# to the dictionary of stocks that are created when
-def plot_stock_data(start_date, end_date, stock_portfolio, index, portfolio_only=False, percentage=False):
+def create_plotting_df(start_date, end_date, stock_portfolio, index):
+    """
+    Creates a pandas dataframe to be used for plotting the results. The columns are comprised of the value of the
+    user's portfolio (in $), the value of the selected index (in $), the growth of the portfolio (in %), and the
+    growth of the index (in %). Additionally, the growth of each stock (in %) in the portfolio is added as a column.
+
+    :param start_date: A string that represents the start date set by the user in the Stock Market Parameters page. The
+    format of the string is YYYY-MM-DD
+    :param end_date: A string that represents the end date set by the user in the Stock Market Parameters page. The
+    format of the string is YYYY-MM-DD
+    :param stock_portfolio: A dictionary with key value pairs of Ticker:Investment amount that represents the user's
+    portfolio
+    :param index: A string representing the index that is chosen by the user
+    :return portfolio_and_index_tracker: A pandas dataframe containing the total value of the user's portfolio and
+    index, the growth of the portfolio and index, and the growth of each stock that make up the index
+
+    """
     index_ticker = index_ticker_hash[index]
-    index_name = index_name_hash[index]
     amount_invested_index = 0
 
     start_date_datetime = datetime.datetime.strptime(start_date, '%Y-%m-%d')
@@ -94,7 +142,6 @@ def plot_stock_data(start_date, end_date, stock_portfolio, index, portfolio_only
 
     end_date_datetime = datetime.datetime.strptime(end_date, '%Y-%m-%d')
     end_date_epoch = int(time.mktime(end_date_datetime.timetuple()))
-
 
     # Create an empty Series to save the dollar values of the user's portfolio. The ticker used is the first ticker of
     # the stock portfolio to copy the TimeStamp index.
@@ -109,8 +156,9 @@ def plot_stock_data(start_date, end_date, stock_portfolio, index, portfolio_only
             timestamp_epoch = stock_data['chart']['result'][0]['timestamp']
             timestamp_datetime = [datetime.datetime.utcfromtimestamp(time).date() for time in timestamp_epoch]
 
-            portfolio_and_index_tracker = pd.DataFrame(0, index=timestamp_datetime, columns=['Portfolio Value', 'Index Value', 'Portfolio Growth', 'Index Growth'])
-
+            portfolio_and_index_tracker = pd.DataFrame(0, index=timestamp_datetime,
+                                                       columns=['Portfolio Value', 'Index Value', 'Portfolio Growth',
+                                                                'Index Growth'])
 
         stock_growth = calculate_stock_growth(stock_data, amount_invested_stock)
 
@@ -121,17 +169,36 @@ def plot_stock_data(start_date, end_date, stock_portfolio, index, portfolio_only
         portfolio_and_index_tracker[ticker] = stock_growth[1]
 
     for i in range(len(stock_growth[0])):
-        portfolio_and_index_tracker['Portfolio Growth'][i] = (portfolio_and_index_tracker['Portfolio Value'][i]/portfolio_and_index_tracker['Portfolio Value'][0]) * 100
+        portfolio_and_index_tracker['Portfolio Growth'][i] = (portfolio_and_index_tracker['Portfolio Value'][i] /
+                                                              portfolio_and_index_tracker['Portfolio Value'][0]) * 100
 
     # Historical price of the index
     index_data = query_historical_stock_data(index_ticker, start_date_epoch, end_date_epoch)
 
     index_growth = calculate_stock_growth(index_data, amount_invested_index)
 
-
-
     portfolio_and_index_tracker['Index Value'] = index_growth[1]
     portfolio_and_index_tracker['Index Growth'] = index_growth[0]
+
+    return portfolio_and_index_tracker
+
+
+# The start and end represent the start year and end year set by the user. The stock portfolio refers
+# to the dictionary of stocks that are created when
+def plot_stock_data(portfolio_and_index_tracker, index, portfolio_only=False, percentage=False):
+    """
+    Creates a plot for the data and returns
+
+
+    :param portfolio_and_index_tracker: A pandas dataframe returned by the create_plotting_df function
+    :param index: A string representing the index that is chosen by the user
+    :param portfolio_only: A boolean value to determine whether only the portfolio should be graphed or not. If False,
+    the graph will include both the portfolio and the index
+    :param percentage: A boolean value to determine whether the percentage should be graphed or not. If False,
+    the graph is plotted with regards to the dollar
+    :return graph: A string of decoded bytes that represent the graph as a PNG image 
+    """
+    index_name = index_name_hash[index]
 
     portfolio_tracker = portfolio_and_index_tracker.iloc[:, 4:].copy()
 
@@ -161,8 +228,6 @@ def plot_stock_data(start_date, end_date, stock_portfolio, index, portfolio_only
             percentage = portfolio_tracker[column].divide(portfolio_tracker[column][0]) * 100
             plt.plot(percentage, label=column)
         plt.legend()
-
-
 
     buffer = BytesIO()
     plt.savefig(buffer, format='png')

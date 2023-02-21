@@ -4,9 +4,15 @@ import re
 import csv
 import datetime as dt
 
-# Function that extracts the ticker and name of the company from a soup object, Used in the get_all_tickers()
-# function. Additionally, it excludes all stock tickers with . or -
 def extract_ticker_and_name(soup):
+    """
+    Extracts the ticker and name of the company from a BeautifulSoup object. When extracting the tickers and name,
+    it also excludes all stock tickers with . or -
+
+    :param soup: A BeautifulSoup object
+    :return all_tickers: A set containing all of the tickers that are extracted from the BeautifulSoup object,
+    excluding those with . or -
+    """
     all_tickers = set()
 
     for row in soup:
@@ -20,9 +26,12 @@ def extract_ticker_and_name(soup):
 
     return all_tickers
 
-# Function that scrapes the eoddata.com to get all the stock tickers for the stocks that are on sale on the
-# NYSE and NASDAQ exchange
 def get_all_tickers():
+    """
+    Scrapes the eoddata.com website to get all the tickers from the NYSE and NASDAQ exchange
+
+    :return all_tickers: A set containing all of the tickers from the NYSE and NASDAQ exchanges, excluding those with . or -
+    """
     urls = ['https://eoddata.com/stocklist/NYSE/{alphabet}.htm', 'https://eoddata.com/stocklist/NASDAQ/{alphabet}.htm']
     all_tickers = set()
 
@@ -44,9 +53,17 @@ def get_all_tickers():
 
 
 def create_stock_data():
+    """
+    Creates a csv file with three columns: company_name, ticker, and first_trade_date. The first_trade_date is
+    extracted by querying the stock data through the Yahoo Finance API
+
+    :return: None, but creates a stocks.csv file that is saved under the base directory
+    """
+
     # Set the user agent headers to be able to send queries to Yahoo Finance
     user_agent_headers = {
-        'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.95 Safari/537.36'}
+        'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_1) AppleWebKit/537.36 (KHTML, like Gecko) \
+        Chrome/39.0.2171.95 Safari/537.36'}
 
     # The Yahoo Finance url for making queries
     query_url = 'https://query2.finance.yahoo.com/v8/finance/chart/{ticker}'
@@ -76,8 +93,7 @@ def create_stock_data():
             print(f"Ticker for {company} failed")
             continue
 
-        # If the first trade year exists, convert into a year value and append it to the first_trade_date key.
-        # Otherwise, append 0
+        # If the first trade year exists, append it to the first_trade_date key. Otherwise, append 0
         if first_date_epoch:
             csv_data['first_trade_date'].append(first_date_epoch)
         else:
