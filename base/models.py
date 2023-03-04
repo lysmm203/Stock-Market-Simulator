@@ -1,6 +1,7 @@
 from django.db import models
 from django.core.validators import MinValueValidator, MaxValueValidator
 
+
 stock_indices = [
     ('s&p', 'S&P 500'),
     ('djia', 'DJIA'),
@@ -26,4 +27,3 @@ class StockTicker(models.Model):
 
     def __str__(self):
         return f"Symbol: {self.ticker}, First Trade Date: {self.first_trade_date}, Company Name: {self.company_name}"
-

@@ -183,12 +183,10 @@ def create_plotting_df(start_date, end_date, stock_portfolio, index):
     return portfolio_and_index_tracker
 
 
-# The start and end represent the start year and end year set by the user. The stock portfolio refers
-# to the dictionary of stocks that are created when
 def plot_stock_data(portfolio_and_index_tracker, index, portfolio_only=False, percentage=False):
     """
-    Creates a plot for the data and returns
-
+    Creates a plot for the data and returns a string of decoded bytes that represent the plotted graph as
+    a PNG image
 
     :param portfolio_and_index_tracker: A pandas dataframe returned by the create_plotting_df function
     :param index: A string representing the index that is chosen by the user

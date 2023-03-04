@@ -7,8 +7,9 @@
 <div class="container justify-content-center h-100">
     <div class="row">
         <div class="d-flex flex-column min-vh-100 justify-content-center align-items-center">
-                <h1>Login</h1>
+
             <div class="dialogue-box">
+                <h1>Login</h1>
 
                 <form method="POST">
 
@@ -26,10 +27,11 @@
                     </div>
                 </form>
 
-                <p>Don't have an account? </p>
-                <a href="{% url 'register' %}">Register</a>
-
             </div>
+
+                <p>Don't have an account? <a href="{% url 'register' %}">Register</a> </p>
+
+
         </div>
 
     </div>
