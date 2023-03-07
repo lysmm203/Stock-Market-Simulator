@@ -14,18 +14,21 @@
                 <form method="POST">
 
                     {% csrf_token %}
-                    <div style="display:block;">
-                        <label class="dialogue-box-label" for="id_username">Username: </label>
-                        {{form.username}}
-                    </div>
+                    <div class="form-group">
 
-                    <label class="dialogue-box-label" for="id_password">Password: </label>
-                    {{form.password}}
+                        <div style="display:block;">
+                            <label class="dialogue-box-label" for="id_username">Username: </label>
+                            {{form.username}}
+                        </div>
 
-                    <div style="text-align: center;">
-                        <input type="submit" value="Login">
-                    </div>
+                        <label class="dialogue-box-label" for="id_password">Password: </label>
+                        {{form.password}}
+
+                        <div style="text-align: center;">
+                            <input type="submit" value="Login">
+                        </div>
                 </form>
+            </div>
 
             </div>
 

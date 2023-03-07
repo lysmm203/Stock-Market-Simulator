@@ -11,24 +11,31 @@
             <div class="dialogue-box">
                     <form method="POST">
                         {% csrf_token %}
-                        {{form.as_p}}
+<!--                        {{form.as_p}}-->
 
-<!--                        <div>-->
-<!--                            <label class="form-label" for="id_username">Username: </label>-->
-<!--                            {{form.username}}-->
-<!--                        </div>-->
+                        <div class="margin-padding">
+                            <div class="form-group">
+                                    <label class="dialogue-box-label label-settings" for="id_username">Username: </label>
+                                    {{form.username}}
 
-<!--                        <div>-->
-<!--                            <label class="form-label" for="id_password1">Password: </label>-->
-<!--                            {{form.password1}}-->
-<!--                        </div>-->
+                            </div>
 
-<!--                        <div>-->
-<!--                            <label class="form-label" for="id_password2">Confirm Password: </label>-->
-<!--                            {{form.password2}}-->
-<!--                        </div>-->
+                            <div class="form-group-lg">
+                                <label class="dialogue-box-label label-settings" for="id_password1">Password: </label>
+                                {{form.password1}}
+                            </div>
 
-                        <input type="submit" value="Register">
+                            <div class="form-group-lg">
+                                <label class="dialogue-box-label label-settings" for="id_password2">Confirm Password: </label>
+                                {{form.password2}}
+                            </div>
+
+                        </div>
+
+                        <div class="margin-padding" style="text-align: center;">
+                            <input type="submit" value="Register">
+                        </div>
+
                     </form>
 
                     <p>Already have an account? </p>
