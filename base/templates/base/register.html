@@ -9,7 +9,7 @@
         <div class="d-flex flex-column min-vh-100 justify-content-center align-items-center">
             <h1>Register</h1>
             <div class="dialogue-box">
-                    <form method="POST">
+                    <form method="POST" id="registration-form">
                         {% csrf_token %}
 <!--                        {{form.as_p}}-->
 
@@ -33,13 +33,15 @@
                         </div>
 
                         <div class="margin-padding" style="text-align: center;">
-                            <input type="submit" value="Register">
+                            <button form="registration-form" type="submit" value="Register" class="btn btn-outline-dark btn-lg">Register</button>
                         </div>
 
                     </form>
 
-                    <p>Already have an account? </p>
-                    <a href="{% url 'login' %}">Login</a>
+                    <div class="margin-padding" style="text-align: left; margin-bottom: 0px;">
+                        <p>Already have an account? </p>
+                        <a href="{% url 'login' %}">Login</a>
+                    </div>
             </div>
         </div>
     </div>
