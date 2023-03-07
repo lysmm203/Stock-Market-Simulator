@@ -11,7 +11,7 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import login
 
 from .models import StockParameters, StockTicker
-from .forms import RegistrationForm
+from .forms import RegistrationForm, LoginForm
 from .utils import plot_stock_data, add_tickers_to_db, filter_stock_by_start_date, ticker_extractor, create_plotting_df
 
 import requests
@@ -23,6 +23,7 @@ class CustomLoginView(LoginView):
     template_name = 'base/login.html'
     fields = '__all__'
     redirect_authenticated_user = True
+    form_class = LoginForm
 
     def get_success_url(self):
         return reverse_lazy('index')
