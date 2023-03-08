@@ -4,6 +4,7 @@ body{
 
 p{
     font-size: 1.5rem;
+    margin: 0px;
 }
 
 a{
@@ -33,7 +34,6 @@ h1{
     margin: 4rem;
     min-width: 60%;
 
-
     -webkit-box-shadow:0 0 10px gray;
     -moz-box-shadow: 0 0 10px gray;
     box-shadow:0 0 10px gray;
@@ -43,6 +43,26 @@ h1{
 .dialogue-box-label{
     font-size: 2rem;
     margin: 0.5rem;
+}
+
+.nav-bar{
+    background-color: #b7c4cd;
+    min-height: 10vh;
+    /*padding: 20px;*/
+
+    -webkit-box-shadow:0 0 5px gray;
+    -moz-box-shadow: 0 0 5px gray;
+    box-shadow:0 0 5px gray;
+    margin-bottom: 2.5%;
+}
+
+.nav-bar-element{
+    font-size: 2rem;
+    margin: 2rem;
+}
+
+.remove-all-margin{
+    margin: 0px !important;
 }
 
 .testing-class{

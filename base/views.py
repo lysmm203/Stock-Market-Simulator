@@ -11,7 +11,7 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import login
 
 from .models import StockParameters, StockTicker
-from .forms import RegistrationForm, LoginForm
+from .forms import RegistrationForm, LoginForm, StockMarketParametersForm
 from .utils import plot_stock_data, add_tickers_to_db, filter_stock_by_start_date, ticker_extractor, create_plotting_df
 
 import requests
@@ -42,7 +42,8 @@ class RegistrationView(CreateView):
 class StockParameterFormView(LoginRequiredMixin, CreateView):
     template_name = 'base/stock_form.html'
     model = StockParameters
-    fields = '__all__'
+
+    form_class = StockMarketParametersForm
     success_url = reverse_lazy('index')
 
     def post(self, request):

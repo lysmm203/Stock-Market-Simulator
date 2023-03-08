@@ -4,28 +4,47 @@
 
 {% block body %}
 
-<div class="min-vh-15">
 
-{% if request.user.is_authenticated%}
-<p>{{request.user}}</p>
-<a href="{% url 'logout' %}">Logout</a>
-{% else %}
-<a href="{% url 'login' %}">Login</a>
-{% endif %}
+<div class="d-flex nav-bar container-fluid align-items-center">
+    <div class="col d-flex justify-content-between">
+        <p class="nav-bar-element">{{request.user}}</p>
+        <a class="btn btn-outline-dark btn-sm nav-bar-element" href="{% url 'logout' %}">Logout</a>
+    </div>
 </div>
 
-
-<div class="container justify-content-center h-85">
+<div class="container justify-content-center h-100">
     <div class="row">
-        <div class="d-flex flex-column min-vh-85 justify-content-center align-items-center">
+        <div class="d-flex flex-column min-vh-75 justify-content-center align-items-center">
             <h1>Stock Market Parameters</h1>
 
             <div class="dialogue-box">
 
-                <form method="POST">
+                <form method="POST" id="parameter-form">
                     {% csrf_token %}
-                    {{ form.as_p }}
-                    <input type="submit" value="Submit">
+
+                    <div class="margin-padding">
+                        <label class="dialogue-box-label label-settings" for="id_money">Money: </label>
+                        {{form.money}}
+
+                        <label class="dialogue-box-label label-settings" for="id_start_date">Start Date: </label>
+                        {{form.start_date}}
+
+                        <label class="dialogue-box-label label-settings" for="id_end_date">End Date: </label>
+                        {{form.end_date}}
+
+                        <label class="dialogue-box-label label-settings" for="id_index">Index: </label>
+                        {{form.index}}
+                    </div>
+
+<!--                    {{ form.as_p }}-->
+<!--                    <input type="submit" value="Submit">-->
+
+                    <div class="margin-padding" style="text-align: center; margin-bottom: 2.5%;">
+                        <button class="btn btn-outline-dark btn-lg" form="parameter-form" type="submit"
+                                value="Submit">Submit
+                        </button>
+                    </div>
+
                 </form>
 
             </div>
@@ -34,7 +53,7 @@
 </div>
 {% endblock %}
 
-id_money
-id_start_date
-id_end_date
-id_index
+{{form.money}}
+{{form.start_date}}
+{{form.end_date}}
+{{form.index}}
