@@ -1,7 +1,7 @@
 from django.forms import ModelForm, TextInput, DateInput, Select
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm, UsernameField
 from django.contrib.auth.models import User
-from .models import StockParameters
+from .models import StockParameters, StockTicker
 
 class RegistrationForm(UserCreationForm):
     def __init__(self, *args, **kwargs):
@@ -43,23 +43,6 @@ class LoginForm(AuthenticationForm):
 
 
 class StockMarketParametersForm(ModelForm):
-    # def __init__(self, *args, **kwargs):
-    #     super().__init__(*args, **kwargs)
-    #     self.fields['money'].widget.attrs.update({
-    #         'placeholder': 'Amount of Money for Your Portfolio',
-    #         'class': 'form-control-lg form-input-padding'
-    #     })
-    #     self.fields['start_date'].widget.attrs.update({
-    #         'placeholder': 'Start Date of the Simulation ',
-    #         'class': 'form-control-lg form-input-padding'
-    #     })
-    #     self.fields['end_date'].widget.attrs.update({
-    #         'placeholder': 'End Date of the Simulation',
-    #         'class': 'form-control-lg form-input-padding'
-    #     })
-    #     self.fields['index'].widget.attrs.update({
-    #         'class': 'form-control-lg form-input-padding'
-    #     })
 
     class Meta:
         model = StockParameters

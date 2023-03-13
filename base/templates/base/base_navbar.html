@@ -18,6 +18,9 @@
     <div class="d-flex nav-bar container-fluid align-items-center">
       <div class="col d-flex justify-content-between">
           <p class="nav-bar-element">{{request.user}}</p>
+
+          <h1> {% block page_title %} {% endblock %}</h1>
+
           <a class="btn btn-outline-dark btn-sm nav-bar-element" href="{% url 'logout' %}">Logout</a>
       </div>
   </div>

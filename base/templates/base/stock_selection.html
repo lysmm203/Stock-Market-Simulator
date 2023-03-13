@@ -1,15 +1,8 @@
-<!DOCTYPE html>
-{% load static %}
-<html lang="en">
-<head>
-    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
-    <meta charset="UTF-8">
-    <title>Stock Selection</title>
-    <script src="https://code.jquery.com/jquery-3.6.3.js" integrity="sha256-nQLuAZGRRcILA+6dMBOvcRh5Pe310sBpanc6+QBmyVM=" crossorigin="anonymous"></script>
-    <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
-    <link rel="stylesheet" href="{% static 'base/css/styles.css' %}">
-    <link rel="stylesheet" href="//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
+{% extends 'base/base_navbar.html'%}
+
+{% block title %} Stock Selection {% endblock %}
+
+{% block script %}
     <script>
         $(function () {
             $("#user_input").autocomplete({
@@ -37,30 +30,38 @@
             });
         });
     </script>
-</head>
 
-<body>
-{{request.session.money}}
+{% endblock %}
+
+{% block page_title %} Stock Selection {% endblock %}
+
+{% block body %}
+
+
 
 <div class="container justify-content-center h-100">
     <div class="row">
-        <div class="d-flex flex-column min-vh-100 justify-content-center align-items-center">
-                <h1>Stock Selection</h1>
+        <div class="d-flex flex-column justify-content-center align-items-center">
+            <p class="dialogue-box-label"> Amount of Money Left: {{request.session.money}}</p>
+
             <div class="dialogue-box">
-                <form method="POST">
+                <form method="POST" id="stock-form">
                     {% csrf_token %}
-                    <div class="ui-widget">
-                        <label for="user_input">Company: </label>
-                        <input id="user_input" name="chosen_stock">
+                    <div class="margin-padding">
+                        <label for="user_input" class="dialogue-box-label label-settings">Company: </label>
+                        <input id="user_input" class="form-control-lg form-input-padding" name="chosen_stock">
                     </div>
 
-                    <div>
-                        <label>Amount to Invest: </label>
-                        <input type="number" name="investment_amount">
+                    <div class="margin-padding">
+                        <label class="dialogue-box-label label-settings">Amount to Invest: </label>
+                        <input type="number" class="form-control-lg form-input-padding" name="investment_amount">
                     </div>
 
-                    <div>
-                        <input type="submit" value="Submit">
+
+                    <div class="margin-padding" style="text-align: center; margin-bottom: 2.5%;">
+                        <button class="btn btn-outline-dark btn-lg" form="stock-form" type="submit"
+                                value="Submit">Submit
+                        </button>
                     </div>
 
                 </form>
@@ -68,6 +69,5 @@
         </div>
     </div>
 </div>
+{% endblock %}
 
-</body>
-</html>
