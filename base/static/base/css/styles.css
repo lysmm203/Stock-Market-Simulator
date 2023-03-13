@@ -47,13 +47,13 @@ h1{
 
 .nav-bar{
     background-color: #b7c4cd;
-    min-height: 10vh;
+    min-height: 8vh;
     /*padding: 20px;*/
 
-    -webkit-box-shadow:0 0 5px gray;
-    -moz-box-shadow: 0 0 5px gray;
-    box-shadow:0 0 5px gray;
-    margin-bottom: 2.5%;
+    -webkit-box-shadow:0 0 15px gray;
+    -moz-box-shadow: 0 0 15px gray;
+    box-shadow:0 0 15px gray;
+    margin-bottom: 4rem;
 }
 
 .nav-bar-element{

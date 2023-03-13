@@ -1,23 +1,15 @@
-{% extends 'base/base.html'%}
+{% extends 'base/base_navbar.html'%}
 
 {% block title %} Stock Market Parameters {% endblock %}
 
 {% block body %}
-
-
-<div class="d-flex nav-bar container-fluid align-items-center">
-    <div class="col d-flex justify-content-between">
-        <p class="nav-bar-element">{{request.user}}</p>
-        <a class="btn btn-outline-dark btn-sm nav-bar-element" href="{% url 'logout' %}">Logout</a>
-    </div>
-</div>
 
 <div class="container justify-content-center h-100">
     <div class="row">
         <div class="d-flex flex-column min-vh-75 justify-content-center align-items-center">
             <h1>Stock Market Parameters</h1>
 
-            <div class="dialogue-box">
+            <div class="dialogue-box" style="margin-bottom: 0px;">
 
                 <form method="POST" id="parameter-form">
                     {% csrf_token %}
