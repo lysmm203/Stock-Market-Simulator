@@ -1,32 +1,54 @@
-{% extends 'base/base.html'%}
+{% extends 'base/base_navbar.html'%}
 
 {% block title %} Results {% endblock %}
 
+{% block page_title %} Results {% endblock %}
+
 {% block body %}
 
-<!--The plots for the raw values-->
-
-    <!--<p>Portfolio vs Index Raw</p>-->
-    <!--<img src="data:image/png;base64, {{portfolio_vs_index_raw|safe}}" alt="" id="img">-->
-
-    <!--<p>Portfolio Raw</p>-->
-        <!--<img src="data:image/png;base64, {{portfolio_raw|safe}}" alt="" id="img">-->
-
-<div class="container">
-    <div class="row">
-        <div class="col">
-            <p>Portfolio vs Index Percentage</p>
-            <img alt="" id="img" src="data:image/png;base64, {{portfolio_vs_index_percentage|safe}}">
+<div class="carousel slide" data-bs-ride="false" id="graphCarousel">
+    <div class="carousel-indicators">
+        <button aria-current="true" aria-label="Slide 1" class="active" data-bs-slide-to="0"
+                data-bs-target="#graphCarousel" type="button"></button>
+        <button aria-label="Slide 2" data-bs-slide-to="1" data-bs-target="#graphCarousel"
+                type="button"></button>
+    </div>
+    <div class="carousel-inner">
+        <div class="carousel-item active">
+            <div class="justify-content-center d-flex">
+                <img src="data:image/png;base64, {{portfolio_vs_index_raw|safe}}">
+            </div>
+            <div class="carousel-caption d-none d-md-block">
+                <h1>First slide label</h1>
+            </div>
         </div>
 
-        <div class="col">
-            <p>Portfolio Percentage</p>
-            <img alt="" id="img" src="data:image/png;base64, {{portfolio_percentage|safe}}">
+        <div class="carousel-item">
+            <div class="justify-content-center d-flex">
+                <img src="data:image/png;base64, {{portfolio_raw|safe}}">
+            </div>
+            <div class="carousel-caption d-none d-md-block">
+                <h1>Second slide label</h1>
+            </div>
         </div>
     </div>
+    <button class="carousel-control-prev" data-bs-slide="prev" data-bs-target="#graphCarousel"
+            type="button">
+        <span aria-hidden="true" class="carousel-control-prev-icon"></span>
+        <span class="visually-hidden">Previous</span>
+    </button>
+    <button class="carousel-control-next" data-bs-slide="next" data-bs-target="#graphCarousel"
+            type="button">
+        <span aria-hidden="true" class="carousel-control-next-icon"></span>
+        <span class="visually-hidden">Next</span>
+    </button>
 </div>
 
-<br>
+<div>
+    <h2>This is a text</h2>
+</div>
+
+
 
 <a href="{% url 'index' %}">Go back to the Stock Market Parameters Page</a>
 

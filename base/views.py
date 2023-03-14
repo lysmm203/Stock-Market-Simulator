@@ -116,14 +116,16 @@ class ResultsView(LoginRequiredMixin, ListView):
 
         portfolio_vs_index_percentage = plot_stock_data(plotting_df, index, percentage=True)
         portfolio_percentage = plot_stock_data(plotting_df, index, portfolio_only=True, percentage=True)
-        # portfolio_vs_index_raw = plot_stock_data(start_date, end_date, stock_portfolio, index)
-        # portfolio_raw = plot_stock_data(start_date, end_date, stock_portfolio, index, portfolio_only=True)
+        portfolio_vs_index_raw = plot_stock_data(plotting_df, index)
+        portfolio_raw = plot_stock_data(plotting_df, index, portfolio_only=True)
 
 
         context['portfolio_vs_index_percentage'] = portfolio_vs_index_percentage
         context['portfolio_percentage'] = portfolio_percentage
-        # context['portfolio_vs_index_raw'] = portfolio_vs_index_raw
-        # context['portfolio_raw'] = portfolio_raw
+        context['portfolio_vs_index_raw'] = portfolio_vs_index_raw
+        context['portfolio_raw'] = portfolio_raw
+        context['dataframe'] = plotting_df
+
 
         return context
 
