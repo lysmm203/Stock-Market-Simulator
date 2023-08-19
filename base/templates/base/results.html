@@ -1,0 +1,141 @@
+{% extends 'base/base_navbar.html'%}
+
+{% block title %} Results {% endblock %}
+
+{% block page_title %} Results {% endblock %}
+
+{% block script %}
+<script>
+    var my_carousel = document.getElementById('graph-carousel');
+
+
+    my_carousel.addEventListener('slide.bs.carousel', function (event) {
+        console.log(event.to);
+        var curr_slide = event.to;
+
+        if (curr_slide == 0){
+            $('#table-one').show();
+            $('#table-two').hide();
+        } else{
+            $('#table-one').hide();
+            $('#table-two').show();
+        }
+
+    })
+</script>
+{% endblock %}
+
+{% block body %}
+
+<div class="carousel slide" data-bs-interval="false" id="graph-carousel">
+    <div class="carousel-indicators">
+        <button aria-current="true" aria-label="Slide 1" class="active" data-bs-slide-to="0"
+                data-bs-target="#graph-carousel" type="button"></button>
+        <button aria-label="Slide 2" data-bs-slide-to="1" data-bs-target="#graph-carousel"
+                type="button"></button>
+    </div>
+    <div class="carousel-inner">
+        <div class="carousel-item active" id="slide-one">
+            <div>
+                <div class="justify-content-center d-flex">
+                    <img src="data:image/png;base64, {{portfolio_vs_index_raw|safe}}">
+                </div>
+                <div class="carousel-caption d-none d-md-block">
+                    <h1>Portfolio vs Index in $</h1>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="carousel-item" id="slide-two">
+            <div class="justify-content-center d-flex">
+                <img src="data:image/png;base64, {{portfolio_raw|safe}}">
+            </div>
+            <div class="carousel-caption d-none d-md-block">
+                <h1>Portfolio Stocks in $</h1>
+            </div>
+        </div>
+    </div>
+    <button class="carousel-control-prev" data-bs-slide="prev" data-bs-target="#graph-carousel"
+            type="button">
+        <span aria-hidden="true" class="carousel-control-prev-icon"></span>
+        <span class="visually-hidden">Previous</span>
+    </button>
+    <button class="carousel-control-next" data-bs-slide="next" data-bs-target="#graph-carousel"
+            type="button">
+        <span aria-hidden="true" class="carousel-control-next-icon"></span>
+        <span class="visually-hidden">Next</span>
+    </button>
+</div>
+
+
+<table class="table table-striped">
+    <thead>
+    <tr>
+        <th scope="col"></th>
+        <th scope="col">Value in $</th>
+        <th scope="col">Change in %</th>
+    </tr>
+    </thead>
+    <tbody id="table-one">
+        <tr>
+            <th scope="row">Your Portfolio</th>
+
+            {% if '+' in portfolio_change.1 %}
+            <td>{{portfolio_value}} <p class="positive-val">({{portfolio_change.1}})</p></td>
+            {% else %}
+            <td>{{portfolio_value}} <p class="negative-val">({{portfolio_change.1}})</p></td>
+            {% endif %}
+
+            {% if '+' in portfolio_change.0 %}
+            <td class="positive-val">{{portfolio_change.0}}</td>
+            {% else %}
+            <td class="negative-val">{{portfolio_change.0}}</td>
+            {% endif %}
+
+        </tr>
+        <tr>
+            <th scope="row">{{request.session.index}}</th>
+
+            {% if '+' in index_change.1 %}
+            <td>{{index_value}} <p class="positive-val">({{index_change.1}})</p></td>
+            {% else %}
+            <td>{{index_value}} <p class="negative-val">({{index_change.1}})</p></td>
+            {% endif %}
+
+            {% if '+' in index_change.0 %}
+            <td class="positive-val">{{index_change.0}}</td>
+            {% else %}
+            <td class="negative-val">{{index_change.0}}</td>
+            {% endif %}
+        </tr>
+    </tbody>
+
+    <tbody id="table-two" style="display: none;">
+    {% for stock in individual_stocks %}
+    <tr>
+        <th scope="row">{{stock.0}}</th>
+
+            {% if '+' in stock.2 %}
+            <td>{{stock.1}} <p class="positive-val">({{stock.2}})</p></td>
+            {% else %}
+            <td>{{stock.1}} <p class="negative-val">({{stock.2}})</p></td>
+            {% endif %}
+
+            {% if '+' in stock.3 %}
+            <td class="positive-val">{{stock.3}}</td>
+            {% else %}
+            <td class="negative-val">{{stock.3}}</td>
+            {% endif %}
+    </tr>
+{% endfor %}
+
+    </tbody>
+</table>
+
+<div class="full-width-flex justify-content-center">
+    <a href="{% url 'index' %}" class="btn btn-outline-dark btn-lg results-btn">Go back to the Stock Market Parameters Page</a>
+</div>
+
+
+{% endblock %}

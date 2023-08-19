@@ -1,0 +1,146 @@
+body{
+    background-color: #FFFBF5;
+    min-height: 100vh;
+}
+
+p{
+    font-size: 1.5rem;
+    margin: 0px;
+}
+
+a{
+    text-decoration: none;
+}
+
+h1{
+    margin: 2rem;
+}
+
+h3{
+    margin: 2rem;
+}
+
+.label-settings{
+    display: block !important;
+}
+
+th{
+    width: 33%;
+}
+
+.form-input-padding{
+    min-width: 100%;
+}
+
+.margin-padding{
+    margin: 50px;
+}
+
+.dialogue-box{
+    /*border: 0.2rem solid black;*/
+    border-radius: 25px;
+    padding: 2rem;
+    margin: 4rem;
+    width: 60%;
+
+    -webkit-box-shadow:0 0 10px gray;
+    -moz-box-shadow: 0 0 10px gray;
+    box-shadow:0 0 10px gray;
+
+}
+
+.dialogue-box-label{
+    font-size: 2rem;
+    margin: 0.5rem;
+}
+
+.nav-bar{
+    background-color: #b7c4cd;
+    min-height: 8vh;
+    /*padding: 20px;*/
+
+    -webkit-box-shadow:0 0 15px gray;
+    -moz-box-shadow: 0 0 15px gray;
+    box-shadow:0 0 15px gray;
+    margin-bottom: 4rem;
+}
+
+.nav-bar-element{
+    font-size: 2rem;
+    margin: 2rem;
+}
+
+.page-title{
+    font-size: 4rem;
+    margin: 2rem;
+}
+
+.remove-all-margin{
+    margin: 0px !important;
+}
+
+.testing-class{
+    color: pink;
+}
+
+.ui-autocomplete {
+    position: absolute;
+    top: 0;
+    left: 0;
+    cursor: default;
+    max-height: 145px;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+.carousel-control-next-icon {
+    background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='red' viewBox='0 0 8 8'%3E%3Cpath d='M2.75 0l-1.5 1.5 2.5 2.5-2.5 2.5 1.5 1.5 4-4-4-4z'/%3E%3C/svg%3E");
+}
+
+.carousel-control-prev-icon {
+    background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='red' viewBox='0 0 8 8'%3E%3Cpath d='M5.25 0l-4 4 4 4 1.5-1.5-2.5-2.5 2.5-2.5-1.5-1.5z'/%3E%3C/svg%3E");
+}
+
+.carousel .carousel-indicators button{
+    background-color:red;
+
+}
+
+.table.table-striped{
+    font-size: 1.5rem;
+}
+
+
+.carousel-item .carousel-caption{
+    color:black;
+    position: static;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    text-align: center;
+
+}
+
+
+.error-msg{
+    font-size: 1.5rem;
+    color: red;
+    flex-wrap: wrap;
+}
+
+.negative-val{
+    color: red !important;
+}
+
+.positive-val{
+    color:green !important;
+}
+
+.results-btn{
+    margin: 2rem;
+}
+
+.full-width-flex{
+    min-width: 100%;
+    display: flex;
+    text-align: center;
+}

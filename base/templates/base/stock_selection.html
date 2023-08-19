@@ -1,0 +1,101 @@
+{% extends 'base/base_navbar.html'%}
+
+{% block title %} Stock Selection {% endblock %}
+
+{% block page_title %} Stock Selection {% endblock %}
+
+{% block script %}
+    <script>
+        $(function () {
+            $("#user_input").autocomplete({
+                source: function (request, response) {
+                    // Send an AJAX request to the server to retrieve the source data
+                    $.ajax({
+                        type: 'GET',
+                        url: "{% url 'autocomplete' %}",
+                        dataType: "json",
+                        data: {
+                            term: request.term
+                        },
+                        success: function (data) {
+
+                            // Filter the results to only include those that match the search term exactly
+                            var matcher = new RegExp("^" + $.ui.autocomplete.escapeRegex(request.term), "i");
+                            response($.map(data, function (value, key) {
+                                if (matcher.test(value)){
+                                    return key + ": " + value;
+                                }
+                            }));
+                        }
+                    });
+                }
+            });
+        });
+    </script>
+
+    <script>
+        var remainingAmount = parseInt("{{request.session.money}}");
+        $('#money-error').hide()
+
+        $(document).ready(function(){
+            $('#stock-form').on('submit',function(e){
+                var investmentAmount = $('#investment_amount').val();
+
+                if (investmentAmount > remainingAmount){
+                    e.preventDefault();
+                    $('#money-error').show();
+                }
+            });
+        });
+
+
+
+    </script>
+
+{% endblock %}
+
+{% block body %}
+
+
+
+<div class="container justify-content-center h-100">
+    <div class="row">
+        <div class="d-flex flex-column justify-content-center align-items-center">
+            <p class="dialogue-box-label"> Amount of Money Left: ${{request.session.money}}</p>
+
+            <div class="dialogue-box">
+                <form method="POST" id="stock-form">
+                    {% csrf_token %}
+
+                    <div class="margin-padding">
+
+                        <div class="error-msg" id="money-error">
+                            <ul class="errorlist nonfield">
+                                <li>Please enter a value that is less than or equal to the amount of money left</li>
+                            </ul>
+                        </div>
+
+                        <label for="user_input" class="dialogue-box-label label-settings">Company: </label>
+                        <input id="user_input" class="form-control-lg form-input-padding" name="chosen_stock" required>
+                    </div>
+
+                    <div class="margin-padding">
+                        <label class="dialogue-box-label label-settings">Amount to Invest: </label>
+                        <input type="number" class="form-control-lg form-input-padding" name="investment_amount"
+                        id="investment_amount" min="1" required>
+                    </div>
+
+
+                    <div class="margin-padding" style="text-align: center; margin-bottom: 2.5%;">
+                        <button class="btn btn-outline-dark btn-lg" form="stock-form" type="submit"
+                                value="Submit">Submit
+                        </button>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+

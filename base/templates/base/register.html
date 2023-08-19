@@ -1,0 +1,56 @@
+{% extends 'base/base.html'%}
+
+{% block title %} Login {% endblock %}
+
+{% block body %}
+
+<div class="container justify-content-center h-100">
+    <div class="row">
+        <div class="d-flex flex-column min-vh-100 justify-content-center align-items-center">
+            <h1>Register</h1>
+            <div class="dialogue-box">
+                <form id="registration-form" method="POST">
+                    {% csrf_token %}
+
+                    <div class="margin-padding">
+
+
+                        <label class="dialogue-box-label label-settings" for="id_username">Username: </label>
+                        {{form.username}}
+                        <div class="error-msg">
+                            {{form.username.errors}}
+                        </div>
+
+
+                        <label class="dialogue-box-label label-settings" for="id_password1">Password: </label>
+                        {{form.password1}}
+
+                        <div class="error-msg">
+                            {{form.password1.errors}}
+                        </div>
+
+                        <label class="dialogue-box-label label-settings" for="id_password2">Confirm Password: </label>
+                        {{form.password2}}
+
+                        <div class="error-msg">
+                            {{form.password2.errors}}
+                        </div>
+
+                    </div>
+
+                    <div class="margin-padding" style="text-align: center;">
+                        <button class="btn btn-outline-dark btn-lg" form="registration-form" type="submit"
+                                value="Register">Register
+                        </button>
+                    </div>
+
+                </form>
+
+
+            </div>
+            <p class="dialogue-box-label">Already have an account? </p>
+            <a class="btn btn-outline-dark btn-lg" href="{% url 'login' %}">Login</a>
+        </div>
+    </div>
+</div>
+{% endblock %}

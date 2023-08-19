@@ -1,0 +1,48 @@
+{% extends 'base/base_navbar.html'%}
+
+{% block title %} Stock Market Parameters {% endblock %}
+{% block page_title %} Stock Market Parameters {% endblock %}
+
+{% block body %}
+
+<div class="container justify-content-center h-100">
+    <div class="row">
+        <div class="d-flex flex-column min-vh-75 justify-content-center align-items-center">
+
+            <div class="dialogue-box">
+
+                <form method="POST" id="parameter-form">
+                    {% csrf_token %}
+
+                    <div class="margin-padding">
+                        <label class="dialogue-box-label label-settings" for="id_money">Money: </label>
+                        {{form.money}}
+
+                        <label class="dialogue-box-label label-settings" for="id_start_date">Start Date: </label>
+                        {{form.start_date}}
+
+                        <label class="dialogue-box-label label-settings" for="id_end_date">End Date: </label>
+                        {{form.end_date}}
+
+                        <label class="dialogue-box-label label-settings" for="id_index">Index: </label>
+                        {{form.index}}
+                    </div>
+
+                    <div class="margin-padding" style="text-align: center; margin-bottom: 2.5%;">
+                        <button class="btn btn-outline-dark btn-lg" form="parameter-form" type="submit"
+                                value="Submit">Submit
+                        </button>
+                    </div>
+
+                </form>
+
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{{form.money}}
+{{form.start_date}}
+{{form.end_date}}
+{{form.index}}
